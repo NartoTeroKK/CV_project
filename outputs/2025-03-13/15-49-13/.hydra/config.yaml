@@ -1,0 +1,7 @@
+t_epochs: 5
+s_epochs: 10
+data_dir: ./data
+batch_size: 64
+num_classes: 10
+alpha: 0.7
+temperature: 3.0

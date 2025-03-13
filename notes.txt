@@ -1,0 +1,11 @@
+INFO PER PROJECT WORK
+Implementazione una rete teacher dalla quale distillare la conoscenza i più modelli stundet. 
+L'obiettivo fare lo student più piccolo possibile che abbia le migliori performance possibili. 
+Il tutto sarà fatto sul dataset EuroSAT di pytorch (https://pytorch.org/vision/main/generated/torchvision.datasets.EuroSAT.html). 
+Il progetto consiste nell'addestrare diverse tipologie di student distillando la conoscenza nel modo migliore possibile 
+(o dall'ultimo layer o anche da layer intermedi) e analizzare la differenza di prestazioni tra i vari modelli student addestrati, 
+sia in termini di peso e velocità che qualitativi. 
+Per ogni modello (sia teacher che student) andrà usato un qualche algoritmo di XAI (es. GradCAM) 
+per analizzare se i modelli hanno imparato le cose corrette.
+In caso si necessitino di risorse di calcolo è a disposizione il cluster COKA o quello di dipartimento. 
+In caso sia necessario scrivetemi che ci accordiamo.
