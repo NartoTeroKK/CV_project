@@ -2,42 +2,6 @@ import torch
 import torch.nn as nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-""" def train_teacher(model, dataloader, criterion, optimizer, device):
-    model.train()
-    running_loss = 0.0
-    for inputs, labels in dataloader:
-        inputs, labels = inputs.to(device), labels.to(device)
-        optimizer.zero_grad()
-        outputs = model(inputs)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        optimizer.step()
-        running_loss += loss.item()
-    return running_loss / len(dataloader)
-
-def train_student_with_distillation(student, teacher, dataloader, criterion, distill_loss, alpha, T, optimizer, device):
-    student.train()
-    teacher.eval()
-    running_loss = 0.0
-    for inputs, labels in dataloader:
-        inputs, labels = inputs.to(device), labels.to(device)
-
-        # Forward pass
-        teacher_outputs = teacher(inputs).detach()
-        student_outputs = student(inputs)
-
-        # Calcolo delle perdite
-        hard_loss = criterion(student_outputs, labels)
-        soft_loss = distill_loss(student_outputs, teacher_outputs, T)
-        loss = alpha * soft_loss + (1 - alpha) * hard_loss
-
-        # Backprop
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-
-        running_loss += loss.item()
-    return running_loss / len(dataloader) """
 
 def train_teacher(model, dataloader, criterion, optimizer, device):
     model.train()
@@ -82,7 +46,7 @@ def train_student_with_distillation(
     total_samples = 0
 
     # Learning rate scheduler
-    scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5, verbose=True)
+    scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5)
 
     for inputs, labels in train_loader:
         inputs, labels = inputs.to(device), labels.to(device)

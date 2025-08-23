@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import torch
 import torchmetrics
-
+import os
 
 def evaluate_model(model, dataloader, criterion, device, num_classes, test=False):
     """Calcola metriche di valutazione per il modello.
@@ -59,26 +59,31 @@ def evaluate_model(model, dataloader, criterion, device, num_classes, test=False
             f1_score.update(preds, labels)
             if test:
                 confusion_matrix.update(preds, labels)
+        
     
     # Computazione delle metriche finali
     avg_loss = total_loss / len(dataloader)
+    accuracy_value = accuracy.compute().item()
+    precision_value = precision.compute().cpu().numpy()
+    recall_value = recall.compute().cpu().numpy()
+    f1_score_value = f1_score.compute().cpu().numpy()
     
     metrics = {
         "Loss": round(avg_loss, 4),
-        "Accuracy": round(accuracy.compute().item(), 4),
-        "Precision": round(precision.compute().item(), 4),
-        "Recall": round(recall.compute().item(), 4),
-        "F1 Score": round(f1_score.compute().item(), 4),
+        "Accuracy": round(accuracy_value, 4),
+        "Precision": round(float(precision_value.mean().item()), 4),
+        "Recall": round(float(recall_value.mean().item()), 4),
+        "F1 Score": round(float(f1_score_value.mean().item()), 4),
     }
     
     if test:
         avg_inference_time = total_time / len(dataloader.dataset)
         metrics.update({
             "Inference Time": round(avg_inference_time, 4),
-            #"Confusion Matrix": confusion_matrix.compute().cpu().numpy(),
             "Number of Parameters": num_params,
             "Accuracy/Num Parameters": metrics["Accuracy"] / num_params,
-            "Accuracy/Inference Time": round(metrics["Accuracy"] / avg_inference_time, 4)
+            "Accuracy/Inference Time": round(metrics["Accuracy"] / avg_inference_time, 4),
+            "Confusion Matrix": confusion_matrix.compute().cpu().numpy()
         })
     
     # Reset delle metriche
@@ -92,11 +97,20 @@ def evaluate_model(model, dataloader, criterion, device, num_classes, test=False
     return metrics
 
 
-def plot_confusion_matrix(conf_matrix, class_names):
+def plot_confusion_matrix(conf_matrix, class_names, student_name, output_dir):
     """Visualizza la Confusion Matrix con Seaborn."""
     plt.figure(figsize=(10, 8))
     sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=class_names, yticklabels=class_names)
     plt.xlabel("Predicted")
     plt.ylabel("True")
-    plt.title("Confusion Matrix")
-    plt.show()
+    plt.title(f"Confusion Matrix for {student_name}")
+    plt.xticks(rotation=45)
+    plt.yticks(rotation=0)
+    #plt.show()
+
+    img_dir = os.path.join(output_dir, "confusion_matrices")
+    if not os.path.exists(img_dir):
+        os.makedirs(img_dir)
+    plt.savefig(os.path.join(img_dir, f"{student_name}_confusion_matrix.png"))
+    plt.close()
+

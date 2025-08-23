@@ -2,10 +2,14 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
-class StudentModel(nn.Module):
+
+class SimpleNet(nn.Module):
     def __init__(self, num_classes=10):
-        super(StudentModel, self).__init__()
+        super(SimpleNet, self).__init__()
         self.conv1 = nn.Conv2d(3, 16, kernel_size=3, stride=1, padding=1)
         self.relu = nn.ReLU()
         self.conv2 = nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1)
@@ -39,49 +43,53 @@ class ResidualBlock1(nn.Module):
 
 
 
-class StudentCustom(nn.Module):
+class StudentResNet1(nn.Module):
     def __init__(self, num_classes=10):
-        super(StudentCustom, self).__init__()
-        
+        super(StudentResNet1, self).__init__()
+
         # Convolutional Block 1
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(32)
-        
+
         # Convolutional Block 2
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn2 = nn.BatchNorm2d(64)
         self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)  # Reduces spatial dimensions
-        
+
         # Residual Block
         self.residual_block = ResidualBlock1(64)
-        
+
         # Convolutional Block 3
         self.conv3 = nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn3 = nn.BatchNorm2d(128)
         self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
-        
+
         # Global Average Pooling
         self.global_avg_pool = nn.AdaptiveAvgPool2d(1)  # Reduces spatial dim to 1x1
-        
+
         # Fully Connected Layer
         self.fc = nn.Linear(128, num_classes)
-    
+
     def forward(self, x):
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.relu(self.bn2(self.conv2(x)))
         x = self.pool1(x)
-        
+
         x = self.residual_block(x)
-        
+
         x = F.relu(self.bn3(self.conv3(x)))
         x = self.pool2(x)
-        
+
         x = self.global_avg_pool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)
         return x
 
 
+# StudentResNet2 deprecata perchè StudentResNet1 è più semplice e performante
+'''
+# Residual Block 2
+# 
 class ResidualBlock2(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1):
         super(ResidualBlock2, self).__init__()
@@ -90,12 +98,12 @@ class ResidualBlock2(nn.Module):
         self.relu = nn.ReLU(inplace=True)
         self.conv2 = nn.Conv2d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn2 = nn.BatchNorm2d(out_channels)
-        
+
         # Skip connection (se il numero di canali cambia, applico una convoluzione 1x1 per adattare i canali)
         self.shortcut = nn.Sequential()
         if stride != 1 or in_channels != out_channels:
             self.shortcut = nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride, bias=False)
-        
+
     def forward(self, x):
         out = self.conv1(x)
         out = self.bn1(out)
@@ -106,9 +114,9 @@ class ResidualBlock2(nn.Module):
         out = self.relu(out)
         return out
 
-class StudentResNet(nn.Module):
+class StudentResNet2(nn.Module):
     def __init__(self, num_classes=10):
-        super(StudentResNet, self).__init__()
+        super(StudentResNet2, self).__init__()
         self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3, bias=False)  # Strato iniziale
         self.bn1 = nn.BatchNorm2d(64)
         self.relu = nn.ReLU(inplace=True)
@@ -140,4 +148,114 @@ class StudentResNet(nn.Module):
         x = F.adaptive_avg_pool2d(x, (1, 1))
         x = torch.flatten(x, 1)
         x = self.fc(x)
+        return x
+# '''
+
+
+class StudentNetSeparable(nn.Module):
+    def __init__(self, num_classes=10):
+        super(StudentNetSeparable, self).__init__()
+
+        # Depthwise + Pointwise = Separable convolution
+        self.depthwise = nn.Conv2d(3, 3, kernel_size=3, stride=1, padding=1, groups=3, bias=False)
+        self.pointwise = nn.Conv2d(3, 32, kernel_size=1, stride=1, padding=0, bias=False)
+        self.bn1 = nn.BatchNorm2d(32)
+
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(64)
+
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
+        self.adaptive_pool = nn.AdaptiveAvgPool2d((4, 4))  # forza output a 4x4
+
+        self.fc1 = nn.Linear(64 * 4 * 4, 128)
+        self.fc2 = nn.Linear(128, num_classes)
+
+        self.dropout = nn.Dropout(0.3)
+
+    def forward(self, x):
+        x = self.depthwise(x)
+        x = self.pointwise(x)
+        x = F.relu(self.bn1(x))
+
+        x = F.relu(self.bn2(self.conv2(x)))
+        x = self.pool(x)
+        x = self.adaptive_pool(x)  # Output shape: [batch, 64, 4, 4]
+
+        x = x.view(x.size(0), -1)  # Flatten
+        x = F.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = self.fc2(x)
+
+        return x
+
+
+
+
+class StudentNetDepthwiseSkip(nn.Module):
+    def __init__(self, num_classes=10):
+        super(StudentNetDepthwiseSkip, self).__init__()
+
+        # Depthwise + Pointwise
+        self.depthwise = nn.Conv2d(3, 3, kernel_size=3, stride=1, padding=1, groups=3, bias=False)
+        self.pointwise = nn.Conv2d(3, 32, kernel_size=1, bias=False)
+        self.bn1 = nn.BatchNorm2d(32)
+
+        # Seconda convoluzione
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(64)
+
+        # Skip connection per conv2
+        self.shortcut = nn.Conv2d(32, 64, kernel_size=1, stride=1, bias=False)
+
+        # Pooling spaziale fisso: output [B, 64, 4, 4]
+        self.adaptive_pool = nn.AdaptiveAvgPool2d((4, 4))
+
+        # Classificazione
+        self.fc1 = nn.Linear(64 * 4 * 4, 128)
+        self.fc2 = nn.Linear(128, num_classes)
+        self.dropout = nn.Dropout(0.3)
+
+    def forward(self, x):
+        # Depthwise + Pointwise
+        x = self.depthwise(x)
+        x = self.pointwise(x)
+        x = F.relu(self.bn1(x))  # [B, 32, H, W]
+
+        # Residuo per lo skip
+        residual = self.shortcut(x)  # [B, 64, H, W]
+
+        # Conv2 + skip connection
+        x = self.conv2(x)
+        x = F.relu(self.bn2(x))  # [B, 64, H, W]
+        x = x + residual  # somma skip
+
+        # Adaptive pooling a [B, 64, 4, 4]
+        x = self.adaptive_pool(x)
+
+        # Flatten e classificazione
+        x = x.view(x.size(0), -1)  # [B, 64*4*4]
+        x = F.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = self.fc2(x)
+
+        return x
+
+
+
+class StudentNetLight(nn.Module):
+    def __init__(self, num_classes=10):
+        super(StudentNetLight, self).__init__()
+        self.conv1 = nn.Conv2d(3, 16, kernel_size=3, stride=1, padding=1)
+        self.conv2 = nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1)
+        self.fc1 = nn.Linear(32 * 64 * 64, 64)
+        self.fc2 = nn.Linear(64, num_classes)
+        self.dropout = nn.Dropout(0.4)
+
+    def forward(self, x):
+        x = F.relu(self.conv1(x))
+        x = F.relu(self.conv2(x))
+        x = x.view(x.size(0), -1)  # Flatten
+        x = F.relu(self.fc1(x))
+        x = self.dropout(x)
+        x = self.fc2(x)
         return x

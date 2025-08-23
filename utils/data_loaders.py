@@ -2,6 +2,7 @@ from torchvision.datasets import EuroSAT
 from torchvision import transforms
 from torch.utils.data import DataLoader, random_split, WeightedRandomSampler
 import numpy as np
+import torch
 
 def get_data_loaders(data_dir, batch_size=32, val_split=0.1, test_split=0.1):
     """
@@ -34,18 +35,29 @@ def get_data_loaders(data_dir, batch_size=32, val_split=0.1, test_split=0.1):
     ])
     
     # Supponiamo di avere una lista di etichette
-    labels = [0]*3000 + [1]*3000 + [2]*3000 + [3]*2500 + [4]*2500 + \
+    labels1 = [0]*3000 + [1]*3000 + [2]*3000 + [3]*2500 + [4]*2500 + \
             [5]*2000 + [6]*2500 + [7]*3000 + [8]*2500 + [9]*3000
+
+
+    #sampler = WeightedRandomSampler(sample_weights, len(labels), replacement=True)
+
+    # Caricamento del dataset completo
+    dataset = EuroSAT(root=data_dir, transform=transform, download=True)
+
+    # Estrazione delle etichette (classi)
+    labels = [sample[1] for sample in dataset]
 
     # Calcola i pesi inversi rispetto alla frequenza
     class_counts = np.bincount(labels)
     weights = 1.0 / class_counts
     sample_weights = [weights[label] for label in labels]
 
-    #sampler = WeightedRandomSampler(sample_weights, len(labels), replacement=True)
+    # Conteggio delle occorrenze delle classi
+    class_counts = Counter(labels)
 
-    # Caricamento del dataset completo
-    dataset = EuroSAT(root=data_dir, transform=train_transform, download=True)
+    # Visualizzazione della distribuzione delle classi
+    class_names = dataset.classes
+    class_distribution = [class_counts[i] for i in range(len(class_names))]
 
     # Calcolo delle dimensioni per train, validation e test set
     test_size = int(len(dataset) * test_split)
@@ -73,9 +85,9 @@ def count_classes(dataset):
     # Mostra il numero di sample per classe
     print(class_counts)
 
-def count(dataset, subset=True):
-    if subset:
-        array = dataset.dataset.targets
-    else:
-        array = dataset.targets  
-    print( dict(Counter(array)))
+
+def denormalize(image_tensor, mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]):
+    mean = torch.tensor(mean).view(3, 1, 1)
+    std = torch.tensor(std).view(3, 1, 1)
+    return image_tensor * std + mean
+
