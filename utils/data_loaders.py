@@ -1,6 +1,7 @@
 from torchvision.datasets import EuroSAT
 from torchvision import transforms
 from torch.utils.data import DataLoader, random_split, WeightedRandomSampler
+from collections import Counter
 import numpy as np
 import torch
 
@@ -73,17 +74,6 @@ def get_data_loaders(data_dir, batch_size=32, val_split=0.1, test_split=0.1):
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
     return train_loader, val_loader, test_loader
-
-from collections import Counter
-
-def count_classes(dataset):
-
-    # Conta le occorrenze delle classi
-    labels = [dataset[i][1] for i in range(len(dataset))]
-    class_counts = Counter(labels)
-
-    # Mostra il numero di sample per classe
-    print(class_counts)
 
 
 def denormalize(image_tensor, mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]):

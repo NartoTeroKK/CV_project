@@ -42,10 +42,6 @@ def main(cfg : DictConfig) -> None:
         torch.cuda.manual_seed_all(cfg.seed)
 
 
-    # Fix SSL error
-    #import ssl
-    #ssl._create_default_https_context = ssl._create_stdlib_context
-
     # Calcolo Learning Rate in base alla dimensione del batch
     lr = calc_hyperparam(cfg.batch_size)
     print(f"learning rate: {lr}\n")
@@ -138,7 +134,6 @@ def main(cfg : DictConfig) -> None:
 
         # Applica Grad-CAM sulla classe effettivamente predetta
         grad_cam_map = grad_cam(student, input_image, target_class=predicted_class, layer_name=layer_name_grad)
-        hydra.utils.log.info(f"Grad-CAM map for {s_name} calculated.")
         
         # Salva e visualizza Grad-CAM
         plot_grad_cam(input_image, grad_cam_map, s_name, hydra_oututput_dir)
