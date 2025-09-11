@@ -19,9 +19,9 @@ class SimpleNet(nn.Module):
         return x
 
 # Residual Block
-class ResidualBlock1(nn.Module):
+class ResidualBlock(nn.Module):
     def __init__(self, channels):
-        super(ResidualBlock1, self).__init__()
+        super(ResidualBlock, self).__init__()
         self.conv1 = nn.Conv2d(channels, channels, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(channels)
         self.conv2 = nn.Conv2d(channels, channels, kernel_size=3, stride=1, padding=1, bias=False)
@@ -39,9 +39,9 @@ class ResidualBlock1(nn.Module):
 
 
 
-class StudentResNet1(nn.Module):
+class StudentResNet(nn.Module):
     def __init__(self, num_classes=10):
-        super(StudentResNet1, self).__init__()
+        super(StudentResNet, self).__init__()
 
         # Convolutional Block 1
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1, bias=False)
@@ -53,7 +53,7 @@ class StudentResNet1(nn.Module):
         self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)  # Reduces spatial dimensions
 
         # Residual Block
-        self.residual_block = ResidualBlock1(64)
+        self.residual_block = ResidualBlock(64)
 
         # Convolutional Block 3
         self.conv3 = nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1, bias=False)

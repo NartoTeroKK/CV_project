@@ -23,28 +23,36 @@ def get_data_loaders(data_dir, batch_size=32, val_split=0.1, test_split=0.1):
     assert 0 < test_split < 1, "test_split deve essere tra 0 e 1."
     assert val_split + test_split < 1, "La somma di val_split e test_split deve essere inferiore a 1."
 
-    train_transform = transforms.Compose([
+    """ train_transform = transforms.Compose([
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.RandomVerticalFlip(p=0.5),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]) # Normalizzazione standard ImageNet
-    ])
+    ]) """
 
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]) # Normalizzazione standard ImageNet
     ])
-    
-    # Supponiamo di avere una lista di etichette
-    labels1 = [0]*3000 + [1]*3000 + [2]*3000 + [3]*2500 + [4]*2500 + \
-            [5]*2000 + [6]*2500 + [7]*3000 + [8]*2500 + [9]*3000
 
-
-    #sampler = WeightedRandomSampler(sample_weights, len(labels), replacement=True)
 
     # Caricamento del dataset completo
     dataset = EuroSAT(root=data_dir, transform=transform, download=True)
+    
+    # Distribuzione delle classi nel dataset completo:
+    #     AnnualCrop: 3000 immagini
+    #     Forest: 3000 immagini
+    #     HerbaceousVegetation: 3000 immagini
+    #     Highway: 2500 immagini
+    #     Industrial: 2500 immagini
+    #     Pasture: 2000 immagini
+    #     PermanentCrop: 2500 immagini
+    #     Residential: 3000 immagini
+    #     River: 2500 immagini
+    #     SeaLake: 3000 immagini
 
+
+    """
     # Estrazione delle etichette (classi)
     labels = [sample[1] for sample in dataset]
 
@@ -59,6 +67,11 @@ def get_data_loaders(data_dir, batch_size=32, val_split=0.1, test_split=0.1):
     # Visualizzazione della distribuzione delle classi
     class_names = dataset.classes
     class_distribution = [class_counts[i] for i in range(len(class_names))]
+    print("Distribuzione delle classi nel dataset completo:")
+    for class_name, count in zip(class_names, class_distribution):
+        print(f"  {class_name}: {count} immagini")
+    """
+
 
     # Calcolo delle dimensioni per train, validation e test set
     test_size = int(len(dataset) * test_split)

@@ -1,0 +1,511 @@
+[2025-09-09 11:07:51,528][hydra.utils][INFO] - 
+=== Configurations ===
+t_epochs: 5
+s_epochs: 20
+data_dir: ./data
+batch_size: 64
+num_classes: 10
+alpha: 0.7
+temperature: 3.0
+seed: 44
+
+[2025-09-09 11:07:51,528][hydra.utils][INFO] - 
+learning rate: 0.002
+
+[2025-09-09 11:07:51,570][hydra.utils][INFO] - 
+device: cuda
+
+[2025-09-09 11:07:55,984][hydra.utils][INFO] - 
+=== Training Teacher EfficientNet-B4 ===
+[2025-09-09 11:08:29,206][hydra.utils][INFO] - 
+Epoch 1/5, Loss: 0.4988, Accuracy: 0.8409
+[2025-09-09 11:09:02,237][hydra.utils][INFO] - 
+Epoch 2/5, Loss: 0.1886, Accuracy: 0.9392
+[2025-09-09 11:09:35,295][hydra.utils][INFO] - 
+Epoch 3/5, Loss: 0.1247, Accuracy: 0.9616
+[2025-09-09 11:10:08,307][hydra.utils][INFO] - 
+Epoch 4/5, Loss: 0.0930, Accuracy: 0.9706
+[2025-09-09 11:10:41,374][hydra.utils][INFO] - 
+Epoch 5/5, Loss: 0.0843, Accuracy: 0.9741
+[2025-09-09 11:10:42,801][hydra.utils][INFO] - 
+TEACHER - Test Metrics: {'Loss': 0.1151, 'Accuracy': 0.9689, 'Precision': 0.9703, 'Recall': 0.9674, 'F1 Score': 0.9686}
+[2025-09-09 11:10:42,801][hydra.utils][INFO] - 
+=== Training SimpleNet with Teacher EfficientNet-B4 ===
+[2025-09-09 11:10:56,717][hydra.utils][INFO] - 
+Epoch 1/20, Loss: 1.0909, Accuracy: 0.5927.
+Validation Metrics:
+ {'Loss': 0.7644, 'Accuracy': 0.75, 'Precision': 0.7531, 'Recall': 0.7415, 'F1 Score': 0.7424}
+[2025-09-09 11:10:56,718][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:11:10,628][hydra.utils][INFO] - 
+Epoch 2/20, Loss: 0.5266, Accuracy: 0.8222.
+Validation Metrics:
+ {'Loss': 0.741, 'Accuracy': 0.7819, 'Precision': 0.7844, 'Recall': 0.7714, 'F1 Score': 0.7701}
+[2025-09-09 11:11:10,628][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:11:24,558][hydra.utils][INFO] - 
+Epoch 3/20, Loss: 0.3222, Accuracy: 0.9093.
+Validation Metrics:
+ {'Loss': 0.8134, 'Accuracy': 0.787, 'Precision': 0.7833, 'Recall': 0.7777, 'F1 Score': 0.7776}
+[2025-09-09 11:11:24,558][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:11:38,473][hydra.utils][INFO] - 
+Epoch 4/20, Loss: 0.2193, Accuracy: 0.9543.
+Validation Metrics:
+ {'Loss': 0.8858, 'Accuracy': 0.7944, 'Precision': 0.7871, 'Recall': 0.7902, 'F1 Score': 0.7866}
+[2025-09-09 11:11:38,473][hydra.utils][INFO] - ⏸ Nessun miglioramento (2/4)
+[2025-09-09 11:11:52,410][hydra.utils][INFO] - 
+Epoch 5/20, Loss: 0.1631, Accuracy: 0.9750.
+Validation Metrics:
+ {'Loss': 1.0007, 'Accuracy': 0.7837, 'Precision': 0.7866, 'Recall': 0.7738, 'F1 Score': 0.7734}
+[2025-09-09 11:11:52,411][hydra.utils][INFO] - ⏸ Nessun miglioramento (3/4)
+[2025-09-09 11:12:06,352][hydra.utils][INFO] - 
+Epoch 6/20, Loss: 0.1351, Accuracy: 0.9859.
+Validation Metrics:
+ {'Loss': 0.9773, 'Accuracy': 0.7856, 'Precision': 0.7792, 'Recall': 0.7783, 'F1 Score': 0.776}
+[2025-09-09 11:12:06,352][hydra.utils][INFO] - ⏸ Nessun miglioramento (4/4)
+[2025-09-09 11:12:06,352][hydra.utils][INFO] - Early stopping attivato
+[2025-09-09 11:12:06,352][hydra.utils][INFO] - Modello ripristinato ai pesi migliori
+[2025-09-09 11:12:06,937][hydra.utils][INFO] - 
+SimpleNet - Test Metrics: {'Loss': 0.9892, 'Accuracy': 0.7822, 'Precision': 0.7745, 'Recall': 0.7752, 'F1 Score': 0.7727, 'Total Inference Time': 75.0493, 'Single Img Average Inference Time': 0.0278, 'Number of Parameters': 1315818, 'Accuracy/Num Parameters': 5.944591121264491e-07, 'Accuracy/Inference Time': 28.1407, 'Confusion Matrix': array([[243,   6,   1,   5,   0,  10,  13,   0,   8,   8],
+       [  0, 305,   4,   0,   0,   1,   0,   0,   1,   3],
+       [ 14,   9, 210,  10,  13,   5,  40,   3,   6,   1],
+       [ 12,   6,  11, 153,  18,   5,  17,   8,  29,   1],
+       [  1,   0,   4,   1, 213,   1,   3,   6,   2,   1],
+       [  3,  23,  15,   3,   0, 145,   5,   1,  11,   1],
+       [ 13,   2,  43,  13,  15,   6, 146,   1,  10,   0],
+       [  0,   1,   4,   4,  22,   0,   3, 262,   3,   0],
+       [ 15,   6,  13,  40,   3,   9,   1,   1, 161,   2],
+       [  1,   4,   1,   0,   0,   2,   0,   0,   1, 274]])}
+[2025-09-09 11:12:07,159][hydra.utils][INFO] - SimpleNet - Predizione corretta: True=Residential, Pred=Residential - Layer: conv1
+[2025-09-09 11:12:07,237][hydra.utils][INFO] - SimpleNet - Predizione corretta: True=Residential, Pred=Residential - Layer: conv2
+[2025-09-09 11:12:07,317][hydra.utils][INFO] - SimpleNet - Predizione sbagliata: True=Pasture, Pred=Forest - Layer: conv1
+[2025-09-09 11:12:07,393][hydra.utils][INFO] - SimpleNet - Predizione sbagliata: True=Pasture, Pred=Forest - Layer: conv2
+[2025-09-09 11:12:07,397][hydra.utils][INFO] - SimpleNet model weights saved
+[2025-09-09 11:12:07,397][hydra.utils][INFO] - 
+=== Training StudentResNet with Teacher EfficientNet-B4 ===
+[2025-09-09 11:12:29,969][hydra.utils][INFO] - 
+Epoch 1/20, Loss: 0.8023, Accuracy: 0.7081.
+Validation Metrics:
+ {'Loss': 0.6118, 'Accuracy': 0.7915, 'Precision': 0.7962, 'Recall': 0.7823, 'F1 Score': 0.7774}
+[2025-09-09 11:12:29,969][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:12:52,543][hydra.utils][INFO] - 
+Epoch 2/20, Loss: 0.5290, Accuracy: 0.8051.
+Validation Metrics:
+ {'Loss': 0.5935, 'Accuracy': 0.8141, 'Precision': 0.8082, 'Recall': 0.8117, 'F1 Score': 0.8031}
+[2025-09-09 11:12:52,543][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:13:15,140][hydra.utils][INFO] - 
+Epoch 3/20, Loss: 0.4397, Accuracy: 0.8411.
+Validation Metrics:
+ {'Loss': 0.4699, 'Accuracy': 0.8633, 'Precision': 0.8699, 'Recall': 0.8569, 'F1 Score': 0.8592}
+[2025-09-09 11:13:15,140][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:13:37,806][hydra.utils][INFO] - 
+Epoch 4/20, Loss: 0.3603, Accuracy: 0.8744.
+Validation Metrics:
+ {'Loss': 0.7885, 'Accuracy': 0.8174, 'Precision': 0.8586, 'Recall': 0.8229, 'F1 Score': 0.8203}
+[2025-09-09 11:13:37,807][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:14:00,432][hydra.utils][INFO] - 
+Epoch 5/20, Loss: 0.3241, Accuracy: 0.8872.
+Validation Metrics:
+ {'Loss': 0.2949, 'Accuracy': 0.9022, 'Precision': 0.9053, 'Recall': 0.898, 'F1 Score': 0.8994}
+[2025-09-09 11:14:00,432][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:14:23,075][hydra.utils][INFO] - 
+Epoch 6/20, Loss: 0.2825, Accuracy: 0.9054.
+Validation Metrics:
+ {'Loss': 1.0515, 'Accuracy': 0.7859, 'Precision': 0.8541, 'Recall': 0.7956, 'F1 Score': 0.787}
+[2025-09-09 11:14:23,075][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:14:45,753][hydra.utils][INFO] - 
+Epoch 7/20, Loss: 0.2581, Accuracy: 0.9151.
+Validation Metrics:
+ {'Loss': 1.1171, 'Accuracy': 0.7911, 'Precision': 0.8573, 'Recall': 0.7913, 'F1 Score': 0.7896}
+[2025-09-09 11:14:45,753][hydra.utils][INFO] - ⏸ Nessun miglioramento (2/4)
+[2025-09-09 11:15:08,435][hydra.utils][INFO] - 
+Epoch 8/20, Loss: 0.2329, Accuracy: 0.9229.
+Validation Metrics:
+ {'Loss': 0.2221, 'Accuracy': 0.9363, 'Precision': 0.9378, 'Recall': 0.934, 'F1 Score': 0.9349}
+[2025-09-09 11:15:08,435][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:15:31,141][hydra.utils][INFO] - 
+Epoch 9/20, Loss: 0.2076, Accuracy: 0.9324.
+Validation Metrics:
+ {'Loss': 0.3233, 'Accuracy': 0.9189, 'Precision': 0.9191, 'Recall': 0.9207, 'F1 Score': 0.9186}
+[2025-09-09 11:15:31,141][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:15:53,870][hydra.utils][INFO] - 
+Epoch 10/20, Loss: 0.2028, Accuracy: 0.9361.
+Validation Metrics:
+ {'Loss': 0.2141, 'Accuracy': 0.9263, 'Precision': 0.9388, 'Recall': 0.9213, 'F1 Score': 0.9265}
+[2025-09-09 11:15:53,870][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:16:16,601][hydra.utils][INFO] - 
+Epoch 11/20, Loss: 0.1839, Accuracy: 0.9416.
+Validation Metrics:
+ {'Loss': 0.1641, 'Accuracy': 0.9511, 'Precision': 0.9505, 'Recall': 0.9509, 'F1 Score': 0.9505}
+[2025-09-09 11:16:16,601][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:16:39,236][hydra.utils][INFO] - 
+Epoch 12/20, Loss: 0.1739, Accuracy: 0.9449.
+Validation Metrics:
+ {'Loss': 0.2812, 'Accuracy': 0.9256, 'Precision': 0.9336, 'Recall': 0.9238, 'F1 Score': 0.924}
+[2025-09-09 11:16:39,236][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:17:01,865][hydra.utils][INFO] - 
+Epoch 13/20, Loss: 0.1622, Accuracy: 0.9511.
+Validation Metrics:
+ {'Loss': 0.2789, 'Accuracy': 0.9211, 'Precision': 0.9373, 'Recall': 0.9224, 'F1 Score': 0.9238}
+[2025-09-09 11:17:01,865][hydra.utils][INFO] - ⏸ Nessun miglioramento (2/4)
+[2025-09-09 11:17:24,554][hydra.utils][INFO] - 
+Epoch 14/20, Loss: 0.1625, Accuracy: 0.9488.
+Validation Metrics:
+ {'Loss': 1.3464, 'Accuracy': 0.7981, 'Precision': 0.8775, 'Recall': 0.8079, 'F1 Score': 0.7801}
+[2025-09-09 11:17:24,554][hydra.utils][INFO] - ⏸ Nessun miglioramento (3/4)
+[2025-09-09 11:17:47,230][hydra.utils][INFO] - 
+Epoch 15/20, Loss: 0.1556, Accuracy: 0.9534.
+Validation Metrics:
+ {'Loss': 0.2261, 'Accuracy': 0.9378, 'Precision': 0.9387, 'Recall': 0.9373, 'F1 Score': 0.9349}
+[2025-09-09 11:17:47,231][hydra.utils][INFO] - ⏸ Nessun miglioramento (4/4)
+[2025-09-09 11:17:47,231][hydra.utils][INFO] - Early stopping attivato
+[2025-09-09 11:17:47,231][hydra.utils][INFO] - Modello ripristinato ai pesi migliori
+[2025-09-09 11:17:48,127][hydra.utils][INFO] - 
+StudentResNet - Test Metrics: {'Loss': 0.207, 'Accuracy': 0.943, 'Precision': 0.9426, 'Recall': 0.9428, 'F1 Score': 0.9399, 'Total Inference Time': 380.1072, 'Single Img Average Inference Time': 0.1408, 'Number of Parameters': 168746, 'Accuracy/Num Parameters': 5.588280611095967e-06, 'Accuracy/Inference Time': 6.6984, 'Confusion Matrix': array([[270,   2,   0,   1,   0,   5,   2,   0,  12,   2],
+       [  0, 312,   0,   0,   0,   0,   0,   0,   0,   2],
+       [  1,   1, 292,   0,   0,   4,  13,   0,   0,   0],
+       [  1,   2,   6, 194,  27,   3,   4,   4,  19,   0],
+       [  0,   0,   0,   0, 230,   0,   1,   0,   1,   0],
+       [  1,   0,   4,   0,   0, 202,   0,   0,   0,   0],
+       [  1,   0,   5,   0,   4,   3, 234,   0,   2,   0],
+       [  0,   0,   1,   0,   8,   0,   1, 288,   1,   0],
+       [  1,   0,   1,   0,   1,   3,   1,   0, 242,   2],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   1, 282]])}
+[2025-09-09 11:17:48,258][hydra.utils][INFO] - StudentResNet - Predizione corretta: True=Residential, Pred=Residential - Layer: conv1
+[2025-09-09 11:17:48,339][hydra.utils][INFO] - StudentResNet - Predizione corretta: True=Residential, Pred=Residential - Layer: conv2
+[2025-09-09 11:17:48,416][hydra.utils][INFO] - StudentResNet - Predizione corretta: True=Residential, Pred=Residential - Layer: residual_block
+[2025-09-09 11:17:48,495][hydra.utils][INFO] - StudentResNet - Predizione corretta: True=Residential, Pred=Residential - Layer: conv3
+[2025-09-09 11:17:48,575][hydra.utils][INFO] - StudentResNet - Predizione sbagliata: True=Pasture, Pred=HerbaceousVegetation - Layer: conv1
+[2025-09-09 11:17:48,723][hydra.utils][INFO] - StudentResNet - Predizione sbagliata: True=Pasture, Pred=HerbaceousVegetation - Layer: conv2
+[2025-09-09 11:17:48,804][hydra.utils][INFO] - StudentResNet - Predizione sbagliata: True=Pasture, Pred=HerbaceousVegetation - Layer: residual_block
+[2025-09-09 11:17:48,884][hydra.utils][INFO] - StudentResNet - Predizione sbagliata: True=Pasture, Pred=HerbaceousVegetation - Layer: conv3
+[2025-09-09 11:17:48,886][hydra.utils][INFO] - StudentResNet model weights saved
+[2025-09-09 11:17:48,886][hydra.utils][INFO] - 
+=== Training StudentNetSeparable with Teacher EfficientNet-B4 ===
+[2025-09-09 11:18:06,747][hydra.utils][INFO] - 
+Epoch 1/20, Loss: 0.9757, Accuracy: 0.6186.
+Validation Metrics:
+ {'Loss': 1.1763, 'Accuracy': 0.6519, 'Precision': 0.6809, 'Recall': 0.6512, 'F1 Score': 0.6288}
+[2025-09-09 11:18:06,747][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:18:24,575][hydra.utils][INFO] - 
+Epoch 2/20, Loss: 0.6812, Accuracy: 0.7469.
+Validation Metrics:
+ {'Loss': 0.6292, 'Accuracy': 0.7974, 'Precision': 0.7982, 'Recall': 0.7969, 'F1 Score': 0.7915}
+[2025-09-09 11:18:24,575][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:18:42,386][hydra.utils][INFO] - 
+Epoch 3/20, Loss: 0.6065, Accuracy: 0.7753.
+Validation Metrics:
+ {'Loss': 0.6283, 'Accuracy': 0.7952, 'Precision': 0.8069, 'Recall': 0.7867, 'F1 Score': 0.7881}
+[2025-09-09 11:18:42,386][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:19:00,189][hydra.utils][INFO] - 
+Epoch 4/20, Loss: 0.5566, Accuracy: 0.7943.
+Validation Metrics:
+ {'Loss': 0.564, 'Accuracy': 0.8074, 'Precision': 0.8167, 'Recall': 0.8088, 'F1 Score': 0.8016}
+[2025-09-09 11:19:00,189][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:19:17,943][hydra.utils][INFO] - 
+Epoch 5/20, Loss: 0.5069, Accuracy: 0.8144.
+Validation Metrics:
+ {'Loss': 0.5192, 'Accuracy': 0.84, 'Precision': 0.8389, 'Recall': 0.8378, 'F1 Score': 0.8344}
+[2025-09-09 11:19:17,943][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:19:35,687][hydra.utils][INFO] - 
+Epoch 6/20, Loss: 0.4789, Accuracy: 0.8270.
+Validation Metrics:
+ {'Loss': 0.4206, 'Accuracy': 0.8604, 'Precision': 0.8628, 'Recall': 0.853, 'F1 Score': 0.8554}
+[2025-09-09 11:19:35,688][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:19:53,478][hydra.utils][INFO] - 
+Epoch 7/20, Loss: 0.4547, Accuracy: 0.8390.
+Validation Metrics:
+ {'Loss': 0.4658, 'Accuracy': 0.8426, 'Precision': 0.8533, 'Recall': 0.8377, 'F1 Score': 0.8398}
+[2025-09-09 11:19:53,478][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:20:11,298][hydra.utils][INFO] - 
+Epoch 8/20, Loss: 0.4443, Accuracy: 0.8413.
+Validation Metrics:
+ {'Loss': 0.5122, 'Accuracy': 0.8437, 'Precision': 0.8411, 'Recall': 0.8464, 'F1 Score': 0.837}
+[2025-09-09 11:20:11,298][hydra.utils][INFO] - ⏸ Nessun miglioramento (2/4)
+[2025-09-09 11:20:29,156][hydra.utils][INFO] - 
+Epoch 9/20, Loss: 0.4186, Accuracy: 0.8526.
+Validation Metrics:
+ {'Loss': 0.4283, 'Accuracy': 0.8622, 'Precision': 0.8611, 'Recall': 0.8604, 'F1 Score': 0.859}
+[2025-09-09 11:20:29,157][hydra.utils][INFO] - ⏸ Nessun miglioramento (3/4)
+[2025-09-09 11:20:46,964][hydra.utils][INFO] - 
+Epoch 10/20, Loss: 0.4000, Accuracy: 0.8597.
+Validation Metrics:
+ {'Loss': 0.4963, 'Accuracy': 0.8574, 'Precision': 0.8618, 'Recall': 0.8572, 'F1 Score': 0.8545}
+[2025-09-09 11:20:46,964][hydra.utils][INFO] - ⏸ Nessun miglioramento (4/4)
+[2025-09-09 11:20:46,964][hydra.utils][INFO] - Early stopping attivato
+[2025-09-09 11:20:46,964][hydra.utils][INFO] - Modello ripristinato ai pesi migliori
+[2025-09-09 11:20:47,674][hydra.utils][INFO] - 
+StudentNetSeparable - Test Metrics: {'Loss': 0.5228, 'Accuracy': 0.863, 'Precision': 0.865, 'Recall': 0.8607, 'F1 Score': 0.8599, 'Total Inference Time': 209.5106, 'Single Img Average Inference Time': 0.0776, 'Number of Parameters': 151237, 'Accuracy/Num Parameters': 5.70627558071107e-06, 'Accuracy/Inference Time': 11.1216, 'Confusion Matrix': array([[253,   1,   2,   2,   0,  11,   9,   0,  14,   2],
+       [  0, 302,   0,   0,   0,  11,   0,   0,   1,   0],
+       [  2,  24, 238,   4,   0,   8,  17,   6,  12,   0],
+       [  3,   2,  11, 192,   3,   3,  10,   7,  29,   0],
+       [  0,   0,  15,  11, 196,   0,   3,   7,   0,   0],
+       [  1,   3,   2,   0,   0, 191,   2,   0,   8,   0],
+       [  5,   0,  31,   7,   1,   9, 178,   0,  18,   0],
+       [  0,   0,   4,   1,   0,   0,   0, 294,   0,   0],
+       [  4,   2,   3,  11,   1,  10,   2,   0, 218,   0],
+       [  0,   5,   0,   0,   0,   4,   0,   0,   6, 268]])}
+[2025-09-09 11:20:47,791][hydra.utils][INFO] - StudentNetSeparable - Predizione corretta: True=Residential, Pred=Residential - Layer: depthwise
+[2025-09-09 11:20:47,881][hydra.utils][INFO] - StudentNetSeparable - Predizione corretta: True=Residential, Pred=Residential - Layer: pointwise
+[2025-09-09 11:20:47,972][hydra.utils][INFO] - StudentNetSeparable - Predizione corretta: True=Residential, Pred=Residential - Layer: conv2
+[2025-09-09 11:20:48,063][hydra.utils][INFO] - StudentNetSeparable - Predizione sbagliata: True=HerbaceousVegetation, Pred=Forest - Layer: depthwise
+[2025-09-09 11:20:48,144][hydra.utils][INFO] - StudentNetSeparable - Predizione sbagliata: True=HerbaceousVegetation, Pred=Forest - Layer: pointwise
+[2025-09-09 11:20:48,225][hydra.utils][INFO] - StudentNetSeparable - Predizione sbagliata: True=HerbaceousVegetation, Pred=Forest - Layer: conv2
+[2025-09-09 11:20:48,227][hydra.utils][INFO] - StudentNetSeparable model weights saved
+[2025-09-09 11:20:48,227][hydra.utils][INFO] - 
+=== Training StudentNetDepthwiseSkip with Teacher EfficientNet-B4 ===
+[2025-09-09 11:21:07,126][hydra.utils][INFO] - 
+Epoch 1/20, Loss: 0.9982, Accuracy: 0.6111.
+Validation Metrics:
+ {'Loss': 0.7673, 'Accuracy': 0.7478, 'Precision': 0.7401, 'Recall': 0.7485, 'F1 Score': 0.7379}
+[2025-09-09 11:21:07,126][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:21:25,991][hydra.utils][INFO] - 
+Epoch 2/20, Loss: 0.7097, Accuracy: 0.7301.
+Validation Metrics:
+ {'Loss': 0.6508, 'Accuracy': 0.7837, 'Precision': 0.7779, 'Recall': 0.7794, 'F1 Score': 0.7753}
+[2025-09-09 11:21:25,991][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:21:44,869][hydra.utils][INFO] - 
+Epoch 3/20, Loss: 0.6460, Accuracy: 0.7560.
+Validation Metrics:
+ {'Loss': 0.6269, 'Accuracy': 0.7941, 'Precision': 0.7952, 'Recall': 0.7875, 'F1 Score': 0.7861}
+[2025-09-09 11:21:44,869][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:22:03,693][hydra.utils][INFO] - 
+Epoch 4/20, Loss: 0.5653, Accuracy: 0.7908.
+Validation Metrics:
+ {'Loss': 0.6193, 'Accuracy': 0.81, 'Precision': 0.8087, 'Recall': 0.8077, 'F1 Score': 0.8047}
+[2025-09-09 11:22:03,693][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:22:22,567][hydra.utils][INFO] - 
+Epoch 5/20, Loss: 0.5386, Accuracy: 0.8004.
+Validation Metrics:
+ {'Loss': 0.715, 'Accuracy': 0.7926, 'Precision': 0.7999, 'Recall': 0.7943, 'F1 Score': 0.7889}
+[2025-09-09 11:22:22,567][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:22:41,472][hydra.utils][INFO] - 
+Epoch 6/20, Loss: 0.4929, Accuracy: 0.8191.
+Validation Metrics:
+ {'Loss': 0.5213, 'Accuracy': 0.8448, 'Precision': 0.8468, 'Recall': 0.8429, 'F1 Score': 0.8408}
+[2025-09-09 11:22:41,472][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:23:00,372][hydra.utils][INFO] - 
+Epoch 7/20, Loss: 0.4708, Accuracy: 0.8301.
+Validation Metrics:
+ {'Loss': 0.4916, 'Accuracy': 0.84, 'Precision': 0.8478, 'Recall': 0.8323, 'F1 Score': 0.8321}
+[2025-09-09 11:23:00,372][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:23:19,276][hydra.utils][INFO] - 
+Epoch 8/20, Loss: 0.4409, Accuracy: 0.8390.
+Validation Metrics:
+ {'Loss': 0.4854, 'Accuracy': 0.8511, 'Precision': 0.8542, 'Recall': 0.8455, 'F1 Score': 0.8461}
+[2025-09-09 11:23:19,276][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:23:38,107][hydra.utils][INFO] - 
+Epoch 9/20, Loss: 0.4288, Accuracy: 0.8452.
+Validation Metrics:
+ {'Loss': 0.5038, 'Accuracy': 0.8433, 'Precision': 0.8471, 'Recall': 0.8347, 'F1 Score': 0.8368}
+[2025-09-09 11:23:38,108][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:23:56,937][hydra.utils][INFO] - 
+Epoch 10/20, Loss: 0.4081, Accuracy: 0.8550.
+Validation Metrics:
+ {'Loss': 0.59, 'Accuracy': 0.8252, 'Precision': 0.8466, 'Recall': 0.8147, 'F1 Score': 0.8159}
+[2025-09-09 11:23:56,937][hydra.utils][INFO] - ⏸ Nessun miglioramento (2/4)
+[2025-09-09 11:24:15,803][hydra.utils][INFO] - 
+Epoch 11/20, Loss: 0.3874, Accuracy: 0.8625.
+Validation Metrics:
+ {'Loss': 0.4123, 'Accuracy': 0.8719, 'Precision': 0.877, 'Recall': 0.8665, 'F1 Score': 0.8687}
+[2025-09-09 11:24:15,804][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:24:34,693][hydra.utils][INFO] - 
+Epoch 12/20, Loss: 0.3739, Accuracy: 0.8679.
+Validation Metrics:
+ {'Loss': 0.4876, 'Accuracy': 0.8567, 'Precision': 0.8702, 'Recall': 0.8492, 'F1 Score': 0.8534}
+[2025-09-09 11:24:34,693][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:24:53,553][hydra.utils][INFO] - 
+Epoch 13/20, Loss: 0.3686, Accuracy: 0.8705.
+Validation Metrics:
+ {'Loss': 0.4407, 'Accuracy': 0.8704, 'Precision': 0.8723, 'Recall': 0.8669, 'F1 Score': 0.8664}
+[2025-09-09 11:24:53,553][hydra.utils][INFO] - ⏸ Nessun miglioramento (2/4)
+[2025-09-09 11:25:12,438][hydra.utils][INFO] - 
+Epoch 14/20, Loss: 0.3506, Accuracy: 0.8814.
+Validation Metrics:
+ {'Loss': 0.4106, 'Accuracy': 0.8807, 'Precision': 0.8835, 'Recall': 0.8753, 'F1 Score': 0.8773}
+[2025-09-09 11:25:12,438][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:25:31,271][hydra.utils][INFO] - 
+Epoch 15/20, Loss: 0.3400, Accuracy: 0.8816.
+Validation Metrics:
+ {'Loss': 0.4623, 'Accuracy': 0.87, 'Precision': 0.8712, 'Recall': 0.8678, 'F1 Score': 0.8672}
+[2025-09-09 11:25:31,271][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:25:50,138][hydra.utils][INFO] - 
+Epoch 16/20, Loss: 0.3297, Accuracy: 0.8869.
+Validation Metrics:
+ {'Loss': 0.3797, 'Accuracy': 0.8915, 'Precision': 0.8893, 'Recall': 0.8898, 'F1 Score': 0.8884}
+[2025-09-09 11:25:50,138][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:26:09,010][hydra.utils][INFO] - 
+Epoch 17/20, Loss: 0.3182, Accuracy: 0.8917.
+Validation Metrics:
+ {'Loss': 0.416, 'Accuracy': 0.8867, 'Precision': 0.8864, 'Recall': 0.8853, 'F1 Score': 0.8844}
+[2025-09-09 11:26:09,011][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:26:27,881][hydra.utils][INFO] - 
+Epoch 18/20, Loss: 0.3174, Accuracy: 0.8943.
+Validation Metrics:
+ {'Loss': 0.5047, 'Accuracy': 0.8696, 'Precision': 0.8685, 'Recall': 0.8704, 'F1 Score': 0.8664}
+[2025-09-09 11:26:27,882][hydra.utils][INFO] - ⏸ Nessun miglioramento (2/4)
+[2025-09-09 11:26:46,733][hydra.utils][INFO] - 
+Epoch 19/20, Loss: 0.3107, Accuracy: 0.8934.
+Validation Metrics:
+ {'Loss': 0.4985, 'Accuracy': 0.8759, 'Precision': 0.8728, 'Recall': 0.8781, 'F1 Score': 0.8731}
+[2025-09-09 11:26:46,733][hydra.utils][INFO] - ⏸ Nessun miglioramento (3/4)
+[2025-09-09 11:27:05,617][hydra.utils][INFO] - 
+Epoch 20/20, Loss: 0.2887, Accuracy: 0.9038.
+Validation Metrics:
+ {'Loss': 0.3263, 'Accuracy': 0.8989, 'Precision': 0.8984, 'Recall': 0.8977, 'F1 Score': 0.8972}
+[2025-09-09 11:27:05,617][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:27:05,618][hydra.utils][INFO] - Modello ripristinato ai pesi migliori
+[2025-09-09 11:27:06,412][hydra.utils][INFO] - 
+StudentNetDepthwiseSkip - Test Metrics: {'Loss': 0.3772, 'Accuracy': 0.8915, 'Precision': 0.8896, 'Recall': 0.8884, 'F1 Score': 0.8875, 'Total Inference Time': 267.7541, 'Single Img Average Inference Time': 0.0992, 'Number of Parameters': 153285, 'Accuracy/Num Parameters': 5.815963727696774e-06, 'Accuracy/Inference Time': 8.9898, 'Confusion Matrix': array([[264,   1,   6,   5,   0,   3,   7,   0,   3,   5],
+       [  0, 307,   1,   1,   0,   2,   0,   1,   0,   2],
+       [  3,   3, 267,   4,   6,   3,  23,   1,   1,   0],
+       [  7,   1,   8, 183,  12,   4,  23,   4,  18,   0],
+       [  0,   0,   2,   4, 220,   0,   6,   0,   0,   0],
+       [  6,   4,   6,   1,   0, 185,   3,   0,   1,   1],
+       [  6,   0,  19,   4,   3,   1, 216,   0,   0,   0],
+       [  0,   0,   1,   3,   5,   0,   0, 290,   0,   0],
+       [ 17,   3,   5,  14,   1,   8,   7,   0, 195,   1],
+       [  1,   1,   0,   0,   0,   1,   0,   0,   0, 280]])}
+[2025-09-09 11:27:06,520][hydra.utils][INFO] - StudentNetDepthwiseSkip - Predizione corretta: True=Residential, Pred=Residential - Layer: depthwise
+[2025-09-09 11:27:06,606][hydra.utils][INFO] - StudentNetDepthwiseSkip - Predizione corretta: True=Residential, Pred=Residential - Layer: pointwise
+[2025-09-09 11:27:06,694][hydra.utils][INFO] - StudentNetDepthwiseSkip - Predizione corretta: True=Residential, Pred=Residential - Layer: conv2
+[2025-09-09 11:27:06,781][hydra.utils][INFO] - StudentNetDepthwiseSkip - Predizione sbagliata: True=River, Pred=AnnualCrop - Layer: depthwise
+[2025-09-09 11:27:06,864][hydra.utils][INFO] - StudentNetDepthwiseSkip - Predizione sbagliata: True=River, Pred=AnnualCrop - Layer: pointwise
+[2025-09-09 11:27:06,945][hydra.utils][INFO] - StudentNetDepthwiseSkip - Predizione sbagliata: True=River, Pred=AnnualCrop - Layer: conv2
+[2025-09-09 11:27:06,947][hydra.utils][INFO] - StudentNetDepthwiseSkip model weights saved
+[2025-09-09 11:27:06,947][hydra.utils][INFO] - 
+=== Training StudentNetLight with Teacher EfficientNet-B4 ===
+[2025-09-09 11:27:22,443][hydra.utils][INFO] - 
+Epoch 1/20, Loss: 1.4860, Accuracy: 0.4045.
+Validation Metrics:
+ {'Loss': 1.2014, 'Accuracy': 0.5774, 'Precision': 0.5782, 'Recall': 0.5591, 'F1 Score': 0.5433}
+[2025-09-09 11:27:22,443][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:27:37,886][hydra.utils][INFO] - 
+Epoch 2/20, Loss: 1.0091, Accuracy: 0.6039.
+Validation Metrics:
+ {'Loss': 0.7854, 'Accuracy': 0.7393, 'Precision': 0.7254, 'Recall': 0.7307, 'F1 Score': 0.725}
+[2025-09-09 11:27:37,887][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:27:53,365][hydra.utils][INFO] - 
+Epoch 3/20, Loss: 0.8257, Accuracy: 0.6805.
+Validation Metrics:
+ {'Loss': 0.7854, 'Accuracy': 0.7507, 'Precision': 0.7426, 'Recall': 0.7424, 'F1 Score': 0.736}
+[2025-09-09 11:27:53,365][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:28:08,853][hydra.utils][INFO] - 
+Epoch 4/20, Loss: 0.6441, Accuracy: 0.7571.
+Validation Metrics:
+ {'Loss': 0.886, 'Accuracy': 0.7237, 'Precision': 0.7278, 'Recall': 0.7143, 'F1 Score': 0.7109}
+[2025-09-09 11:28:08,853][hydra.utils][INFO] - ⏸ Nessun miglioramento (2/4)
+[2025-09-09 11:28:24,334][hydra.utils][INFO] - 
+Epoch 5/20, Loss: 0.5460, Accuracy: 0.7994.
+Validation Metrics:
+ {'Loss': 0.7244, 'Accuracy': 0.7952, 'Precision': 0.788, 'Recall': 0.7868, 'F1 Score': 0.7849}
+[2025-09-09 11:28:24,334][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:28:39,776][hydra.utils][INFO] - 
+Epoch 6/20, Loss: 0.4605, Accuracy: 0.8386.
+Validation Metrics:
+ {'Loss': 0.6647, 'Accuracy': 0.8, 'Precision': 0.795, 'Recall': 0.7983, 'F1 Score': 0.7947}
+[2025-09-09 11:28:39,776][hydra.utils][INFO] - Miglioramento trovato, modello salvato in memoria
+[2025-09-09 11:28:55,237][hydra.utils][INFO] - 
+Epoch 7/20, Loss: 0.3958, Accuracy: 0.8689.
+Validation Metrics:
+ {'Loss': 0.807, 'Accuracy': 0.7926, 'Precision': 0.7889, 'Recall': 0.7818, 'F1 Score': 0.7802}
+[2025-09-09 11:28:55,238][hydra.utils][INFO] - ⏸ Nessun miglioramento (1/4)
+[2025-09-09 11:29:10,619][hydra.utils][INFO] - 
+Epoch 8/20, Loss: 0.3494, Accuracy: 0.8891.
+Validation Metrics:
+ {'Loss': 0.8827, 'Accuracy': 0.7974, 'Precision': 0.8, 'Recall': 0.7919, 'F1 Score': 0.7899}
+[2025-09-09 11:29:10,619][hydra.utils][INFO] - ⏸ Nessun miglioramento (2/4)
+[2025-09-09 11:29:26,024][hydra.utils][INFO] - 
+Epoch 9/20, Loss: 0.3121, Accuracy: 0.9071.
+Validation Metrics:
+ {'Loss': 0.8584, 'Accuracy': 0.7981, 'Precision': 0.7936, 'Recall': 0.7936, 'F1 Score': 0.7901}
+[2025-09-09 11:29:26,024][hydra.utils][INFO] - ⏸ Nessun miglioramento (3/4)
+[2025-09-09 11:29:41,498][hydra.utils][INFO] - 
+Epoch 10/20, Loss: 0.2748, Accuracy: 0.9192.
+Validation Metrics:
+ {'Loss': 0.9102, 'Accuracy': 0.7989, 'Precision': 0.7943, 'Recall': 0.7931, 'F1 Score': 0.7913}
+[2025-09-09 11:29:41,499][hydra.utils][INFO] - ⏸ Nessun miglioramento (4/4)
+[2025-09-09 11:29:41,499][hydra.utils][INFO] - Early stopping attivato
+[2025-09-09 11:29:41,499][hydra.utils][INFO] - Modello ripristinato ai pesi migliori
+[2025-09-09 11:29:42,103][hydra.utils][INFO] - 
+StudentNetLight - Test Metrics: {'Loss': 0.9636, 'Accuracy': 0.783, 'Precision': 0.7764, 'Recall': 0.7769, 'F1 Score': 0.7758, 'Total Inference Time': 84.2898, 'Single Img Average Inference Time': 0.0312, 'Number of Parameters': 8394410, 'Accuracy/Num Parameters': 9.327635891027482e-08, 'Accuracy/Inference Time': 25.0813, 'Confusion Matrix': array([[242,   2,   5,  10,   0,  10,   6,   0,  14,   5],
+       [  0, 300,   3,   0,   0,   5,   0,   1,   2,   3],
+       [  8,   8, 191,  17,   4,   6,  52,  11,  13,   1],
+       [  8,   0,  10, 159,   5,   4,  17,  15,  42,   0],
+       [  0,   0,   0,   2, 204,   0,   8,  15,   3,   0],
+       [  4,   9,  13,   5,   0, 152,   2,   0,  21,   1],
+       [  8,   0,  32,  19,   5,   6, 159,   2,  18,   0],
+       [  0,   0,   1,   3,   4,   2,   4, 283,   2,   0],
+       [ 14,   8,  11,  42,   2,  17,   4,   1, 150,   2],
+       [  1,   1,   0,   0,   0,   2,   0,   0,   5, 274]])}
+[2025-09-09 11:29:42,214][hydra.utils][INFO] - StudentNetLight - Predizione corretta: True=Residential, Pred=Residential - Layer: conv1
+[2025-09-09 11:29:42,294][hydra.utils][INFO] - StudentNetLight - Predizione corretta: True=Residential, Pred=Residential - Layer: conv2
+[2025-09-09 11:29:42,376][hydra.utils][INFO] - StudentNetLight - Predizione sbagliata: True=Pasture, Pred=HerbaceousVegetation - Layer: conv1
+[2025-09-09 11:29:42,457][hydra.utils][INFO] - StudentNetLight - Predizione sbagliata: True=Pasture, Pred=HerbaceousVegetation - Layer: conv2
+[2025-09-09 11:29:42,488][hydra.utils][INFO] - StudentNetLight model weights saved
+[2025-09-09 11:29:42,488][hydra.utils][INFO] - 
+Best Student: StudentResNet with Accuracy: 0.943
+[2025-09-09 11:29:42,488][hydra.utils][INFO] - 
+Worst Student: SimpleNet with Accuracy: 0.7822
+[2025-09-09 11:29:42,494][hydra.utils][INFO] - 
+=== Grad-CAM Comparison between Best (StudentResNet) and Worst (SimpleNet) Students ===
+[2025-09-09 11:29:42,624][hydra.utils][INFO] - Confronto Grad-CAM: True=Pasture, StudentResNet Pred=Pasture, SimpleNet Pred=Forest
+[2025-09-09 11:29:42,624][hydra.utils][INFO] - 
+=== Final Results ===
+[2025-09-09 11:29:42,624][hydra.utils][INFO] - 
+Teacher: {'Loss': 0.1151, 'Accuracy': 0.9689, 'Precision': 0.9703, 'Recall': 0.9674, 'F1 Score': 0.9686}
+
+[2025-09-09 11:29:42,624][hydra.utils][INFO] - 
+SimpleNet: {'Loss': 0.9892, 'Accuracy': 0.7822, 'Precision': 0.7745, 'Recall': 0.7752, 'F1 Score': 0.7727, 'Total Inference Time': 75.0493, 'Single Img Average Inference Time': 0.0278, 'Number of Parameters': 1315818, 'Accuracy/Num Parameters': 5.944591121264491e-07, 'Accuracy/Inference Time': 28.1407, 'Confusion Matrix': array([[243,   6,   1,   5,   0,  10,  13,   0,   8,   8],
+       [  0, 305,   4,   0,   0,   1,   0,   0,   1,   3],
+       [ 14,   9, 210,  10,  13,   5,  40,   3,   6,   1],
+       [ 12,   6,  11, 153,  18,   5,  17,   8,  29,   1],
+       [  1,   0,   4,   1, 213,   1,   3,   6,   2,   1],
+       [  3,  23,  15,   3,   0, 145,   5,   1,  11,   1],
+       [ 13,   2,  43,  13,  15,   6, 146,   1,  10,   0],
+       [  0,   1,   4,   4,  22,   0,   3, 262,   3,   0],
+       [ 15,   6,  13,  40,   3,   9,   1,   1, 161,   2],
+       [  1,   4,   1,   0,   0,   2,   0,   0,   1, 274]])}
+[2025-09-09 11:29:42,778][hydra.utils][INFO] - 
+StudentResNet: {'Loss': 0.207, 'Accuracy': 0.943, 'Precision': 0.9426, 'Recall': 0.9428, 'F1 Score': 0.9399, 'Total Inference Time': 380.1072, 'Single Img Average Inference Time': 0.1408, 'Number of Parameters': 168746, 'Accuracy/Num Parameters': 5.588280611095967e-06, 'Accuracy/Inference Time': 6.6984, 'Confusion Matrix': array([[270,   2,   0,   1,   0,   5,   2,   0,  12,   2],
+       [  0, 312,   0,   0,   0,   0,   0,   0,   0,   2],
+       [  1,   1, 292,   0,   0,   4,  13,   0,   0,   0],
+       [  1,   2,   6, 194,  27,   3,   4,   4,  19,   0],
+       [  0,   0,   0,   0, 230,   0,   1,   0,   1,   0],
+       [  1,   0,   4,   0,   0, 202,   0,   0,   0,   0],
+       [  1,   0,   5,   0,   4,   3, 234,   0,   2,   0],
+       [  0,   0,   1,   0,   8,   0,   1, 288,   1,   0],
+       [  1,   0,   1,   0,   1,   3,   1,   0, 242,   2],
+       [  0,   0,   0,   0,   0,   0,   0,   0,   1, 282]])}
+[2025-09-09 11:29:42,924][hydra.utils][INFO] - 
+StudentNetSeparable: {'Loss': 0.5228, 'Accuracy': 0.863, 'Precision': 0.865, 'Recall': 0.8607, 'F1 Score': 0.8599, 'Total Inference Time': 209.5106, 'Single Img Average Inference Time': 0.0776, 'Number of Parameters': 151237, 'Accuracy/Num Parameters': 5.70627558071107e-06, 'Accuracy/Inference Time': 11.1216, 'Confusion Matrix': array([[253,   1,   2,   2,   0,  11,   9,   0,  14,   2],
+       [  0, 302,   0,   0,   0,  11,   0,   0,   1,   0],
+       [  2,  24, 238,   4,   0,   8,  17,   6,  12,   0],
+       [  3,   2,  11, 192,   3,   3,  10,   7,  29,   0],
+       [  0,   0,  15,  11, 196,   0,   3,   7,   0,   0],
+       [  1,   3,   2,   0,   0, 191,   2,   0,   8,   0],
+       [  5,   0,  31,   7,   1,   9, 178,   0,  18,   0],
+       [  0,   0,   4,   1,   0,   0,   0, 294,   0,   0],
+       [  4,   2,   3,  11,   1,  10,   2,   0, 218,   0],
+       [  0,   5,   0,   0,   0,   4,   0,   0,   6, 268]])}
+[2025-09-09 11:29:43,068][hydra.utils][INFO] - 
+StudentNetDepthwiseSkip: {'Loss': 0.3772, 'Accuracy': 0.8915, 'Precision': 0.8896, 'Recall': 0.8884, 'F1 Score': 0.8875, 'Total Inference Time': 267.7541, 'Single Img Average Inference Time': 0.0992, 'Number of Parameters': 153285, 'Accuracy/Num Parameters': 5.815963727696774e-06, 'Accuracy/Inference Time': 8.9898, 'Confusion Matrix': array([[264,   1,   6,   5,   0,   3,   7,   0,   3,   5],
+       [  0, 307,   1,   1,   0,   2,   0,   1,   0,   2],
+       [  3,   3, 267,   4,   6,   3,  23,   1,   1,   0],
+       [  7,   1,   8, 183,  12,   4,  23,   4,  18,   0],
+       [  0,   0,   2,   4, 220,   0,   6,   0,   0,   0],
+       [  6,   4,   6,   1,   0, 185,   3,   0,   1,   1],
+       [  6,   0,  19,   4,   3,   1, 216,   0,   0,   0],
+       [  0,   0,   1,   3,   5,   0,   0, 290,   0,   0],
+       [ 17,   3,   5,  14,   1,   8,   7,   0, 195,   1],
+       [  1,   1,   0,   0,   0,   1,   0,   0,   0, 280]])}
+[2025-09-09 11:29:43,298][hydra.utils][INFO] - 
+StudentNetLight: {'Loss': 0.9636, 'Accuracy': 0.783, 'Precision': 0.7764, 'Recall': 0.7769, 'F1 Score': 0.7758, 'Total Inference Time': 84.2898, 'Single Img Average Inference Time': 0.0312, 'Number of Parameters': 8394410, 'Accuracy/Num Parameters': 9.327635891027482e-08, 'Accuracy/Inference Time': 25.0813, 'Confusion Matrix': array([[242,   2,   5,  10,   0,  10,   6,   0,  14,   5],
+       [  0, 300,   3,   0,   0,   5,   0,   1,   2,   3],
+       [  8,   8, 191,  17,   4,   6,  52,  11,  13,   1],
+       [  8,   0,  10, 159,   5,   4,  17,  15,  42,   0],
+       [  0,   0,   0,   2, 204,   0,   8,  15,   3,   0],
+       [  4,   9,  13,   5,   0, 152,   2,   0,  21,   1],
+       [  8,   0,  32,  19,   5,   6, 159,   2,  18,   0],
+       [  0,   0,   1,   3,   4,   2,   4, 283,   2,   0],
+       [ 14,   8,  11,  42,   2,  17,   4,   1, 150,   2],
+       [  1,   1,   0,   0,   0,   2,   0,   0,   5, 274]])}
+[2025-09-09 11:29:43,442][hydra.utils][INFO] - All models trained and evaluated successfully.

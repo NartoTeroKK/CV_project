@@ -46,7 +46,7 @@ def train_student_with_distillation(
     total_samples = 0
 
     # Learning rate scheduler
-    scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5)
+    scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2)
 
     for inputs, labels in train_loader:
         inputs, labels = inputs.to(device), labels.to(device)
@@ -96,12 +96,21 @@ def distillation_loss(student_outputs, teacher_outputs, T):
 
 # Funzione di valutazione del modello
 
-def calc_hyperparam(batch_size):
-    # learning rate standard per Adam con batch size 32
-    lr = 0.001
-    if batch_size == 32:
-        return lr
-    elif batch_size == 64:
-        return lr * 2
-    elif batch_size == 128:
-        return lr * 4
+def calc_learning_rate(batch_size, base_lr=0.001, base_batch_size=32):
+    # 0.001 learning rate standard per Adam con batch size 32
+    """
+    Calcola il learning rate scalato linearmente in base alla batch size.
+
+    Args:
+        batch_size (int): La batch size attuale.
+        base_lr (float): Il learning rate di base.
+        base_batch_size (int): La batch size di riferimento.
+
+    Returns:
+        float: Il learning rate scalato.
+    """
+    lr = (base_lr / base_batch_size) * batch_size
+    return lr
+    # batch size 32 -> lr 0.001
+    # batch size 64 -> lr 0.002
+    # batch size 128 -> lr 0.004

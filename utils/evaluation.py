@@ -20,9 +20,9 @@ def evaluate_model(model, dataloader, criterion, device, num_classes, test=False
     
     # Metriche standard
     accuracy = torchmetrics.Accuracy(task="multiclass", num_classes=num_classes).to(device)
-    precision = torchmetrics.Precision(task="multiclass", num_classes=num_classes).to(device)
-    recall = torchmetrics.Recall(task="multiclass", num_classes=num_classes).to(device)
-    f1_score = torchmetrics.F1Score(task="multiclass", num_classes=num_classes).to(device)
+    precision = torchmetrics.Precision(task="multiclass", num_classes=num_classes, average='none').to(device)
+    recall = torchmetrics.Recall(task="multiclass", num_classes=num_classes, average='none').to(device)
+    f1_score = torchmetrics.F1Score(task="multiclass", num_classes=num_classes, average='none').to(device)
     confusion_matrix = torchmetrics.ConfusionMatrix(task="multiclass", num_classes=num_classes).to(device) if test else None
     
     model.eval()
@@ -39,7 +39,9 @@ def evaluate_model(model, dataloader, criterion, device, num_classes, test=False
                 start_time = torch.cuda.Event(enable_timing=True)
                 end_time = torch.cuda.Event(enable_timing=True)
                 start_time.record()
+                ###
                 outputs = model(inputs)
+                ###
                 end_time.record()
                 torch.cuda.synchronize()
                 inference_time = start_time.elapsed_time(end_time)
@@ -79,10 +81,11 @@ def evaluate_model(model, dataloader, criterion, device, num_classes, test=False
     if test:
         avg_inference_time = total_time / len(dataloader.dataset)
         metrics.update({
-            "Inference Time": round(avg_inference_time, 4),
+            "Total Inference Time": round(total_time,4),
+            "Single Img Avg Inference Time": round(avg_inference_time, 4),
             "Number of Parameters": num_params,
             "Accuracy/Num Parameters": metrics["Accuracy"] / num_params,
-            "Accuracy/Inference Time": round(metrics["Accuracy"] / avg_inference_time, 4),
+            "Accuracy/Avg Inference Time": round(metrics["Accuracy"] / avg_inference_time, 4),
             "Confusion Matrix": confusion_matrix.compute().cpu().numpy()
         })
     
