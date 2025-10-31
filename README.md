@@ -285,7 +285,7 @@ graph TB
     
     F --> G[🏗️ Initialize Student Model]
     G --> H[🧠 Knowledge Distillation<br/>Training Loop]
-    H --> I[📉 Compute Distillation Loss:<br/>α×soft_loss + (1-α)×hard_loss]
+    H --> I[📉 Compute Distillation Loss:<br/>alpha*soft_loss + (1-alpha)*hard_loss]
     I --> J[✅ Validate on Val Set]
     J --> K{⏰ Early Stopping<br/>Condition?}
     K -->|Continue| H
