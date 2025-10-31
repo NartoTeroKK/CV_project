@@ -277,29 +277,29 @@ CV_project/
 
 ```mermaid
 graph TB
-    A[🚀 Start: main.py] --> B[⚙️ Load Configuration<br/>config.yaml]
-    B --> C[📊 Initialize EuroSAT Dataset<br/>data_loaders.py]
-    C --> D[📈 Split Data:<br/>Train 80% / Val 10% / Test 10%]
-    D --> E[🏫 Train Teacher Model<br/>EfficientNet-B4]
-    E --> F{🎓 For each Student<br/>Architecture}
+    A[Start main.py] --> B[Load Configuration config.yaml]
+    B --> C[Initialize EuroSAT Dataset]
+    C --> D[Split Data: Train 80% Val 10% Test 10%]
+    D --> E[Train Teacher Model EfficientNet-B4]
+    E --> F{For each Student Architecture}
     
-    F --> G[🏗️ Initialize Student Model]
-    G --> H[🧠 Knowledge Distillation<br/>Training Loop]
-    H --> I[📉 Compute Distillation Loss:<br/>alpha*soft_loss + (1-alpha)*hard_loss]
-    I --> J[✅ Validate on Val Set]
-    J --> K{⏰ Early Stopping<br/>Condition?}
+    F --> G[Initialize Student Model]
+    G --> H[Knowledge Distillation Training Loop]
+    H --> I[Compute Distillation Loss]
+    I --> J[Validate on Val Set]
+    J --> K{Early Stopping Condition?}
     K -->|Continue| H
-    K -->|Stop| L[📊 Evaluate on Test Set]
+    K -->|Stop| L[Evaluate on Test Set]
     
-    L --> M[🔍 Generate Grad-CAM<br/>Visualizations]
-    M --> N[📈 Save Confusion Matrix]
-    N --> O[💾 Save Model Weights]
+    L --> M[Generate Grad-CAM Visualizations]
+    M --> N[Save Confusion Matrix]
+    N --> O[Save Model Weights]
     O --> F
     
-    F -->|All Students<br/>Trained| P[🏆 Compare Best vs Worst<br/>Student Models]
-    P --> Q[📊 Generate Comparative<br/>Grad-CAM]
-    Q --> R[📋 Log Final Results]
-    R --> S[🎉 End]
+    F -->|All Students Trained| P[Compare Best vs Worst Students]
+    P --> Q[Generate Comparative Grad-CAM]
+    Q --> R[Log Final Results]
+    R --> S[End]
     
     style A fill:#e1f5e1,stroke:#2e7d32
     style E fill:#ffe1e1,stroke:#d32f2f
